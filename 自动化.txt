@@ -1,3 +1,7 @@
+心脏滴血漏洞
+cat list.txt | while read line ; do echo "QUIT" | openssl s_client -connect $line:443 2>&1 | grep 'server extension "heartbeat" (id=15)' || echo $line: safe; done
+检查OpenSSL Heartbleed漏洞的主机名列表
+
 sql注入
 subfinder -d target.com | tee -a domains
 cat domains | httpx | tee -a urls.alive
@@ -11,3 +15,11 @@ echo "http://tesla.com" | waybackurls | httpx -silent -timeout 2 -threads 100 | 
 
 查找JavaScript文件
 cat domains | httpx -silent | subjs | anew
+
+查找JavaScript文件
+运行ffuf -w js_files.txt -u FUZZ -mr "sourceMappingURL"以标识已定义源映射的JavaScript文件
+下载源地图
+使用unmap在本地解压缩
+浏览配置或仅grep获取API密钥/凭据
+
+assetfinder fitbit.com | httpx -threads 300 -follow-redirects -silent | rush -j200 'curl -m5 -s -I -H "Origin: evil.com" {} | [[ $(grep -c "evil.com") -gt 0 ]] && printf "\n3[0;32m[VUL TO CORS] 3[0m{}"' 2>/dev/null
