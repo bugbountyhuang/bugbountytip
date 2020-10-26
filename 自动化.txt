@@ -1,0 +1,2 @@
+echo "http://tesla.com" | waybackurls | httpx -silent -timeout 2 -threads 100 | gf redirect | anew
+cat domains | httpx -silent | subjs | anew
